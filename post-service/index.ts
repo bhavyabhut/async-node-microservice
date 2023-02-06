@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { randomBytes } from 'crypto';
+import axios from 'axios';
 
 const app = express();
 
@@ -23,11 +24,22 @@ app.post('/post', (req, res) => {
     id,
     title,
   };
+  axios.post('http://localhost:4005/events', {
+    type: 'PostCreated',
+    data: {
+      id,
+      title,
+    },
+  });
   res.send(posts[id]);
 });
 
 app.get('/post', (req, res) => {
   res.send(posts);
+});
+
+app.post('/events', (req, res) => {
+  res.send();
 });
 
 app.listen(4001, () => {

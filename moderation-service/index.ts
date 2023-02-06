@@ -5,6 +5,9 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.post('/events', (req, res) => {
+  res.send();
+});
 
 app.listen(4003, () => {
   console.log('server is running on port 4003');

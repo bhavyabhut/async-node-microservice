@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { randomBytes } from 'crypto';
+import axios from 'axios';
 
 const app = express();
 
@@ -33,12 +34,20 @@ app.post('/post/:id/comment', (req, res) => {
   } else {
     comments[id] = [newComment];
   }
+  axios.post('http://localhost:4005/events', {
+    type: 'CommentCreated',
+    data: newComment,
+  });
   res.send(newComment);
 });
 
 app.get('/post/:id/comment', (req, res) => {
   const { id } = req.params;
   res.send(comments[id]);
+});
+
+app.post('/events', (req, res) => {
+  res.send();
 });
 
 app.listen(4002, () => {
