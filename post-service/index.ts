@@ -2,9 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import { randomBytes } from 'crypto';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+import base_url from '../config';
+import { POST_CREATED } from '../const';
 
 const app = express();
 
+dotenv.config();
 app.use(express.json());
 app.use(cors());
 
@@ -24,8 +29,8 @@ app.post('/post', (req, res) => {
     id,
     title,
   };
-  axios.post('http://localhost:4005/events', {
-    type: 'PostCreated',
+  axios.post(`${base_url.eventBus}events`, {
+    type: POST_CREATED,
     data: {
       id,
       title,
@@ -42,6 +47,8 @@ app.post('/events', (req, res) => {
   res.send();
 });
 
-app.listen(4001, () => {
-  console.log('server is running on port 4001');
+const POST_PORT = process.env.POST_PORT || 4001;
+
+app.listen(POST_PORT, () => {
+  console.log(`post server is running on port ${POST_PORT}`);
 });

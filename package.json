@@ -1,0 +1,12 @@
+{
+  "name": "async-node-microservice",
+  "version": "1.0.0",
+  "author": "Bhavya Bhut <pbhavy4@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.19"
+  }
+}

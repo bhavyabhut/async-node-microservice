@@ -2,20 +2,24 @@ import express from 'express';
 import cors from 'cors';
 import { randomBytes } from 'crypto';
 import axios from 'axios';
+import dotenv from 'dotenv';
+
+import base_url from '../config';
+import { COMMENT_CREATED, COMMENT_UPDATE, COMMENT_MODARATED } from '../const';
 
 const app = express();
 
+dotenv.config();
 app.use(express.json());
 app.use(cors());
 
+interface Commet {
+  id: string;
+  context: string;
+  postId: string;
+}
 interface Comments {
-  [key: string]: [
-    {
-      id: string;
-      context: string;
-      postId: string;
-    }
-  ];
+  [key: string]: Commet[];
 }
 
 const comments: Comments = {};
@@ -28,14 +32,15 @@ app.post('/post/:id/comment', (req, res) => {
     id: randomBytes(4).toString('hex'),
     context,
     postId: id,
+    status: 'pending',
   };
   if (comment) {
     comment.push(newComment);
   } else {
     comments[id] = [newComment];
   }
-  axios.post('http://localhost:4005/events', {
-    type: 'CommentCreated',
+  axios.post(`${base_url.eventBus}events`, {
+    type: COMMENT_CREATED,
     data: newComment,
   });
   res.send(newComment);
@@ -47,9 +52,25 @@ app.get('/post/:id/comment', (req, res) => {
 });
 
 app.post('/events', (req, res) => {
+  const { type, data } = req.body;
+  if (type === COMMENT_MODARATED) {
+    console.log('done', type, data, comments);
+
+    comments[data.postId] = comments[data.postId].map((comment) => {
+      if (comment.id === data.id) {
+        return { ...data };
+      } else return comment;
+    });
+    axios.post(`${base_url.eventBus}events`, {
+      type: COMMENT_UPDATE,
+      data,
+    });
+  }
   res.send();
 });
 
-app.listen(4002, () => {
-  console.log('server is running on port 4002');
+const COMMET_PORT = process.env.COMMET_PORT || 4002;
+
+app.listen(COMMET_PORT, () => {
+  console.log(`comment server is running on port ${COMMET_PORT}`);
 });
