@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import axios from 'axios';
 import dotenv from 'dotenv';
-import base_url from '../config';
+import base_url from './config';
 
 const app = express();
 

@@ -4,8 +4,8 @@ import { randomBytes } from 'crypto';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-import base_url from '../config';
-import { COMMENT_CREATED, COMMENT_UPDATE, COMMENT_MODARATED } from '../const';
+import base_url from './config';
+import { COMMENT_CREATED, COMMENT_UPDATE, COMMENT_MODARATED } from './const';
 
 const app = express();
 
