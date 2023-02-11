@@ -3,8 +3,8 @@ import cors from 'cors';
 import axios from 'axios';
 import dotenv from 'dotenv';
 
-import { COMMENT_CREATED, COMMENT_UPDATE, POST_CREATED } from '../const';
-import base_url from '../config';
+import { COMMENT_CREATED, COMMENT_UPDATE, POST_CREATED } from './const';
+import base_url from './config';
 
 const app = express();
 dotenv.config();
