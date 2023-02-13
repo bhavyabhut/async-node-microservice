@@ -5,6 +5,8 @@
 - Express
 - React
 - Nodejs
+- Docker
+- Kubernetes
 
 #### Other library and modules
  ##### Frontend
