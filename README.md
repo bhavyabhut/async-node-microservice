@@ -5,8 +5,10 @@
 - Express
 - React
 - Nodejs
+- Typescript
 - Docker
 - Kubernetes
+
 
 #### Other library and modules
  ##### Frontend
@@ -14,7 +16,7 @@
 ![](https://img.shields.io/badge/Framework-Antd-blue)
 ![](https://img.shields.io/badge/Framework-ReactStrap-blue)
 ![](https://img.shields.io/badge/Framework-Bootstrap-blue)
-![](https://img.shields.io/badge/Chart-rechart-pink)
+![](https://img.shields.io/badge/Bundler-vite-js)
 ![](https://img.shields.io/badge/Router-connected_react_router-green)
 
 ##### Backend
