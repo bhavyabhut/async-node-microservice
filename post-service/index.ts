@@ -29,13 +29,18 @@ app.post('/post', (req, res) => {
     id,
     title,
   };
-  axios.post(`${base_url.eventBus}events`, {
-    type: POST_CREATED,
-    data: {
-      id,
-      title,
-    },
-  });
+  try {
+    axios.post(`${base_url.eventBus}events`, {
+      type: POST_CREATED,
+      data: {
+        id,
+        title,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+
   res.send(posts[id]);
 });
 

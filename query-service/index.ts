@@ -65,7 +65,11 @@ app.post('/events', (req, res) => {
 const QUERY_PORT = process.env.QUERY_PORT;
 
 app.listen(QUERY_PORT, async () => {
-  console.log(`query server is running on port ${QUERY_PORT}`);
-  const { data } = await axios.get(`${base_url.eventBus}all-events`);
-  data.map((d: any) => handleEvent(d.type, d.data));
+  try {
+    console.log(`query server is running on port ${QUERY_PORT}`);
+    const { data } = await axios.get(`${base_url.eventBus}all-events`);
+    data.map((d: any) => handleEvent(d.type, d.data));
+  } catch (error) {
+    console.log(error, 'errors');
+  }
 });
