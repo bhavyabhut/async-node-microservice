@@ -16,16 +16,16 @@ const base_url = {
     ? `http://post-service:${POST_PORT}/`
     : `http://localhost:${POST_PORT}/`,
   comment: isKubernetesEnable
-    ? `http://comment-service:${POST_PORT}/`
+    ? `http://comment-service:${COMMET_PORT}/`
     : `http://localhost:${COMMET_PORT}/`,
   moderation: isKubernetesEnable
-    ? `http://moderation-service:${POST_PORT}/`
+    ? `http://moderation-service:${MODERATION_PORT}/`
     : `http://localhost:${MODERATION_PORT}/`,
   query: isKubernetesEnable
-    ? `http://query-service:${POST_PORT}/`
+    ? `http://query-service:${QUERY_PORT}/`
     : `http://localhost:${QUERY_PORT}/`,
   eventBus: isKubernetesEnable
-    ? `http://event-bus-service:${POST_PORT}/`
+    ? `http://event-bus-service:${EVENT_BUS_PORT}/`
     : `http://localhost:${EVENT_BUS_PORT}/`,
 };
 
