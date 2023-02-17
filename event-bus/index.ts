@@ -20,13 +20,15 @@ const allEvents: AllEvents[] = [];
 const handleEvent = async (type: string, data: any) => {
   try {
     const event = { type, data };
+    console.log(type, 'type');
+
     allEvents.push(event);
     await axios.post(`${base_url.post}events`, event);
     await axios.post(`${base_url.comment}events`, event);
     await axios.post(`${base_url.moderation}events`, event);
     await axios.post(`${base_url.query}events`, event);
   } catch (error) {
-    console.log(error);
+    console.log(error, 'event bus');
   }
 };
 

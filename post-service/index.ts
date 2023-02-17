@@ -22,7 +22,7 @@ interface Posts {
 
 const posts: Posts = {};
 
-app.post('/post', (req, res) => {
+app.post('/post', async (req, res) => {
   const { title } = req.body;
   const id = randomBytes(4).toString('hex');
   posts[id] = {
@@ -30,7 +30,7 @@ app.post('/post', (req, res) => {
     title,
   };
   try {
-    axios.post(`${base_url.eventBus}events`, {
+    await axios.post(`${base_url.eventBus}events`, {
       type: POST_CREATED,
       data: {
         id,
@@ -38,7 +38,7 @@ app.post('/post', (req, res) => {
       },
     });
   } catch (error) {
-    console.log(error);
+    console.log(error, 'sending post to event bus');
   }
 
   res.send(posts[id]);

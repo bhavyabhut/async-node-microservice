@@ -24,7 +24,7 @@ interface Comments {
 
 const comments: Comments = {};
 
-app.post('/post/:id/comment', (req, res) => {
+app.post('/post/:id/comment', async (req, res) => {
   const { id } = req.params;
   const { context } = req.body;
   const comment = comments[id];
@@ -39,11 +39,15 @@ app.post('/post/:id/comment', (req, res) => {
   } else {
     comments[id] = [newComment];
   }
-  axios.post(`${base_url.eventBus}events`, {
-    type: COMMENT_CREATED,
-    data: newComment,
-  });
-  res.send(newComment);
+  try {
+    await axios.post(`${base_url.eventBus}events`, {
+      type: COMMENT_CREATED,
+      data: newComment,
+    });
+    res.send(newComment);
+  } catch (error) {
+    console.log(error, 'post id error');
+  }
 });
 
 app.get('/post/:id/comment', (req, res) => {
@@ -51,7 +55,7 @@ app.get('/post/:id/comment', (req, res) => {
   res.send(comments[id]);
 });
 
-app.post('/events', (req, res) => {
+app.post('/events', async (req, res) => {
   const { type, data } = req.body;
   if (type === COMMENT_MODARATED) {
     console.log('done', type, data, comments);
@@ -61,10 +65,14 @@ app.post('/events', (req, res) => {
         return { ...data };
       } else return comment;
     });
-    axios.post(`${base_url.eventBus}events`, {
-      type: COMMENT_UPDATE,
-      data,
-    });
+    try {
+      await axios.post(`${base_url.eventBus}events`, {
+        type: COMMENT_UPDATE,
+        data,
+      });
+    } catch (error) {
+      console.log(error, 'events in comment');
+    }
   }
   res.send();
 });

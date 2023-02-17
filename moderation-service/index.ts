@@ -11,7 +11,7 @@ const app = express();
 dotenv.config();
 app.use(express.json());
 app.use(cors());
-app.post('/events', (req, res) => {
+app.post('/events', async (req, res) => {
   const { type, data } = req.body;
 
   if (type === COMMENT_CREATED) {
@@ -20,10 +20,14 @@ app.post('/events', (req, res) => {
     } else {
       data.status = 'approved';
     }
-    axios.post(`${base_url.eventBus}events`, {
-      type: COMMENT_MODARATED,
-      data,
-    });
+    try {
+      await axios.post(`${base_url.eventBus}events`, {
+        type: COMMENT_MODARATED,
+        data,
+      });
+    } catch (error) {
+      console.log(error, 'error moderarion');
+    }
   }
 
   res.send();
